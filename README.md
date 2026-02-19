@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌾 Farmer Scheme Assistant (AI Govt. Scheme Chatbot)
 
-## Getting Started
+A modern AI-powered web app that helps Indian farmers discover relevant **government schemes** (central + state-ready design) using natural language queries — with **official source links**, **voice typing**, and **read aloud** support.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✅ Key Features
+
+### 🤖 AI Scheme Search (ChatGPT-like)
+- Farmers can type normal messages like:
+  - “I want to buy a tractor, is there any subsidy or loan scheme?”
+  - “My crop got damaged due to rainfall, which insurance scheme can help?”
+- The system understands the user’s intent and returns **relevant schemes** with explanation.
+
+### 📌 Official Sources
+- Every scheme is returned with an **official link**
+- Output also provides short summary, eligibility, and benefits
+
+### 🔎 Smart Matching (Future-Proof)
+- Uses a **unified scheme knowledge base** (`schemes_clean.jsonl`)
+- Uses **FAISS + embeddings** for fast semantic search
+- Uses **multi-intent reranking** so results are not random or generic
+
+### 🎙️ Voice + Accessibility
+- ✅ Voice typing (English + Hindi)
+- ✅ Read aloud (Text-to-Speech)
+
+### 📱 Responsive UI
+- Works on mobile, tablet, and desktop devices
+
+---
+
+## DEMO Link
+``` bash
+
+Demo Link: https://farmer-scheme-assistant-frontend.vercel.app/
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧠 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Backend
+- **FastAPI**
+- **Groq LLM API** (Llama model)
+- **FAISS** (vector search)
+- **SentenceTransformers** (embeddings)
 
-## Learn More
+### Frontend
+- **Next.js (App Router)**
+- **TailwindCSS**
+- **Web Speech API** (Speech-to-text + Text-to-speech)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Project Architecture (High Level)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Intent Understanding**
+   - Extract user intent and search reasoning from the message
 
-## Deploy on Vercel
+2. **Scheme Retrieval (RAG-style)**
+   - Search in local scheme index (`FAISS index`)
+   - Multi-intent reranking to ensure relevant schemes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Final Response Generation**
+   - Produces ChatGPT-style answer (`final_answer`)
+   - Provides scheme cards + official sources
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ✅ API Endpoints
+
+### `POST /analyze`
+Returns structured scheme matching result.
+
+**Request**
+```json
+{
+  "message": "I want to buy a tractor"
+}

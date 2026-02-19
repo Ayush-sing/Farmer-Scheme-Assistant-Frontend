@@ -33,7 +33,7 @@ A modern AI-powered web app that helps Indian farmers discover relevant **govern
 ## DEMO Link
 ``` bash
 
-Demo Link: https://farmer-scheme-assistant-frontend.vercel.app/
+https://farmer-scheme-assistant-frontend.vercel.app/
 
 ```
 
